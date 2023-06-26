@@ -147,10 +147,10 @@ func (f Function) Encode(args ...interface{}) []byte {
 			leftPad(&buf, 0x00, alignment-len(arg)+1)
 			buf.Write(arg[1:])
 		case []address.Address:
-			// How evm handles addresses?
-			// packs like array and leftpads with 32 (eth word)
-			leftPad(&buf, 0x00, alignment-len(arg)+1)
-			buf.Write([]byte{1})
+			for _, a := range arg {
+				leftPad(&buf, 0x00, alignment-len(a)+1)
+				buf.Write(a[1:])
+			}
 		case *big.Int:
 			b := arg.Bytes()
 			switch arg.Sign() {
