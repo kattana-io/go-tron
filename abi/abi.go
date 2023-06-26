@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
-	"github.com/kattana/go-tron/address"
-	"io/ioutil"
 	"math/big"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/kattana/go-tron/address"
 )
 
 type ABI struct {
@@ -19,7 +20,7 @@ type ABI struct {
 }
 
 func ReadFile(path string) (ABI, error) {
-	file, err := ioutil.ReadFile(path)
+	file, err := os.ReadFile(path)
 	if err != nil {
 		return ABI{}, nil
 	}
@@ -58,6 +59,13 @@ func (a *ABI) UnmarshalJSON(data []byte) error {
 				Inputs:     entry.Inputs,
 				Outputs:    entry.Outputs,
 			}
+		case "constructor":
+			a.Constructor = Function{
+				Name:       entry.Name,
+				Mutability: entry.Mutability,
+				Inputs:     entry.Inputs,
+				Outputs:    entry.Outputs,
+			}
 		case "Function":
 			a.Functions[entry.Name] = Function{
 				Name:       entry.Name,
@@ -65,7 +73,19 @@ func (a *ABI) UnmarshalJSON(data []byte) error {
 				Inputs:     entry.Inputs,
 				Outputs:    entry.Outputs,
 			}
+		case "function":
+			a.Functions[entry.Name] = Function{
+				Name:       entry.Name,
+				Mutability: entry.Mutability,
+				Inputs:     entry.Inputs,
+				Outputs:    entry.Outputs,
+			}
 		case "Event":
+			a.Events[entry.Name] = Event{
+				Name:   entry.Name,
+				Inputs: entry.Inputs,
+			}
+		case "event":
 			a.Events[entry.Name] = Event{
 				Name:   entry.Name,
 				Inputs: entry.Inputs,
@@ -126,6 +146,11 @@ func (f Function) Encode(args ...interface{}) []byte {
 		case address.Address:
 			leftPad(&buf, 0x00, alignment-len(arg)+1)
 			buf.Write(arg[1:])
+		case []address.Address:
+			// How evm handles addresses?
+			// packs like array and leftpads with 32 (eth word)
+			leftPad(&buf, 0x00, alignment-len(arg)+1)
+			buf.Write([]byte{1})
 		case *big.Int:
 			b := arg.Bytes()
 			switch arg.Sign() {
