@@ -3,9 +3,9 @@ package account
 
 import (
 	"crypto/ecdsa"
-	"github.com/kattana/go-tron"
-	"github.com/kattana/go-tron/address"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/kattana-io/go-tron"
+	"github.com/kattana-io/go-tron/address"
 )
 
 type Account interface {

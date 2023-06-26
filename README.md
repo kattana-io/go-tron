@@ -15,8 +15,8 @@ This API is currently in alpha and it is not recommended it be used in productio
 package main
 
 import (
-	"github.com/kattana/go-tron/account"
-	"github.com/kattana/go-tron/client"
+	"github.com/kattana-io/go-tron/account"
+	"github.com/kattana-io/go-tron/client"
 	"log"
 )
 

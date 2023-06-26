@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/kattana/go-tron/account"
-	"github.com/kattana/go-tron/client"
+	"github.com/kattana-io/go-tron/account"
+	"github.com/kattana-io/go-tron/client"
 	"log"
 )
 

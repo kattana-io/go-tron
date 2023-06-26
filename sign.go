@@ -2,7 +2,7 @@ package tron
 
 import (
 	"crypto/ecdsa"
-	"github.com/kattana/go-tron/address"
+	"github.com/kattana-io/go-tron/address"
 )
 
 // Signer is an interface for implementations of objects that

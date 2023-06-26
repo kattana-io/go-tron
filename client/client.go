@@ -7,10 +7,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kattana/go-tron"
-	"github.com/kattana/go-tron/abi"
-	"github.com/kattana/go-tron/account"
-	"github.com/kattana/go-tron/address"
+	"github.com/kattana-io/go-tron"
+	"github.com/kattana-io/go-tron/abi"
+	"github.com/kattana-io/go-tron/account"
+	"github.com/kattana-io/go-tron/address"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -83,7 +83,9 @@ func (c *Client) GetBlockRange(start, end uint64) ([]tron.Block, error) {
 		End:   end,
 	}
 
-	var response = struct{ Blocks []tron.Block `json:"block"` }{}
+	var response = struct {
+		Blocks []tron.Block `json:"block"`
+	}{}
 	if err := c.post("wallet/getblockbylimitnext", &request, &response); err != nil {
 		return nil, err
 	}
@@ -99,7 +101,9 @@ func (c *Client) GetLatestBlocks(n int) ([]tron.Block, error) {
 		Num: n,
 	}
 
-	var response = struct{ Blocks []tron.Block `json:"block"` }{}
+	var response = struct {
+		Blocks []tron.Block `json:"block"`
+	}{}
 	if err := c.post("wallet/getblockbylatestnum", &request, &response); err != nil {
 		return nil, err
 	}

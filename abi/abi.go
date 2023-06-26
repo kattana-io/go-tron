@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/kattana/go-tron/address"
+	"github.com/kattana-io/go-tron/address"
 )
 
 type ABI struct {

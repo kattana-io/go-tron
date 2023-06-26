@@ -1,4 +1,4 @@
-module github.com/kattana/go-tron
+module github.com/kattana-io/go-tron
 
 go 1.20
 
